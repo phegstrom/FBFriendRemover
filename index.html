@@ -60,7 +60,7 @@ Hello World <br />
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
 
-    FB.api('/me?fields=friends', function(response) {
+    FB.api('/me?fields=friends.fields(name,id,picture)', function(response) {
     console.log('Friends: ' + response.friends.data);
     displayFriends(response.friends.data);
     });
@@ -76,5 +76,6 @@ Hello World <br />
   present a graphical Login button that triggers the FB.login() function when clicked. -->
 
 <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+<div id="friendList"></div>
 </body>
 </html>

@@ -3,21 +3,6 @@
 	Created by Rick Sullivan and Parker Hegstrom.
 */
 
-$('#authorizeButton').submit(function () {
-	/* On Submit, we need to:
-		1) Get the User's friends list and display it.
-		2) Asynchronously, analyze the User's recent feed and determine which friends they interact with.
-		3) Determine which friends are inactive somehow.
-		4) Update the displayed friends list to account for the analysis.
-	*/
-
-	var username, password;
-
-	/* Get user and password. */
-
-	GetAccessToken(username, password);
-});
-
 function getFriends(id, accessToken) {
 	/* GET request at me/friends endpoint. 
 
@@ -26,9 +11,14 @@ function getFriends(id, accessToken) {
 };
 
 function displayFriends(friends) {
+	var friendHtml = '';
 	for(var i = 0; i < friends.length; i++) {
-		console.log(friends[i].name + ' : ' + friends[i].id);
+		friendHtml += '<p>' + friends[i].name + ' : ' + friends[i].id 
+			+ ' <img src="' + friends[i].picture + '" /></p>';
 	}
+
+	var friendDiv = document.getElementById('friendListDiv');
+	friendDiv.innerHtml += friendHtml;
 };
 
 function getFeedData(id, accessToken) {
