@@ -18,7 +18,7 @@ function displayFriends(friends) {
 	}
 
 	var friendDiv = document.getElementById('friendListDiv');
-	friendDiv.innerHtml += friendHtml;
+	friendDiv.innerHTML += friendHtml;
 };
 
 function getFeedData(id, accessToken) {
