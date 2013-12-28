@@ -3,11 +3,11 @@
 	Created by Rick Sullivan and Parker Hegstrom.
 */
 
-page.load() = function() {
+$(document).ready(function() {
 	/* If User is already logged into Facebook, call getAccessToken(); */
-};
+});
 
-authorizeButton.submit() = function () {
+$('#authorizeButton').submit(function () {
 	/* On Submit, we need to:
 		1) Get a User Access Token with the User's credentials.
 		2) Get the User's friends list and display it.
@@ -21,7 +21,7 @@ authorizeButton.submit() = function () {
 	/* Get user and password. */
 
 	GetAccessToken(username, password);
-};
+});
 
 function getAccessToken(username, password) {
 	/* SUCESS: getFriends(msg.id, msg.accessToken) and getFeedData */
@@ -52,7 +52,9 @@ function getFeedData(id, accessToken) {
 function processFeedData(feed) {
 	var friends = [];
 
-	return UpdateDisplayedFriends(friends);
+	/* Do shit */
+
+	return updateDisplayedFriends(friends);
 };
 
 function Friend(id, occurrences) {
