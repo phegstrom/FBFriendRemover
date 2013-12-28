@@ -14,7 +14,7 @@ function displayFriends(friends) {
 	var friendHtml = '';
 	for(var i = 0; i < friends.length; i++) {
 		friendHtml += '<p>' + friends[i].name + ' : ' + friends[i].id 
-			+ ' <img src="' + friends[i].picture.url + '"></p>';
+			+ ' <img src="' + friends[i].picture.data.url + '"></p>';
 	}
 
 	var friendDiv = document.getElementById('friendListDiv');
