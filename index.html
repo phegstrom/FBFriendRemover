@@ -5,6 +5,7 @@
 <body>
 Hello World <br />
 <div id="fb-root"></div>
+<script src="scripts/js.js"></script>
 <script>
   window.fbAsyncInit = function() {
   FB.init({
@@ -60,7 +61,7 @@ Hello World <br />
     console.log('Welcome!  Fetching your information.... ');
 
     FB.api('/me?fields=friends', function(response) {
-    console.log('Friends: ' + JSON.stringify(response.friends.data));
+    console.log('Friends: ' + response.friends.data);
     displayFriends(response.friends.data);
     });
 
