@@ -3,17 +3,12 @@
 	Created by Rick Sullivan and Parker Hegstrom.
 */
 
-$(document).ready(function() {
-	/* If User is already logged into Facebook, call getAccessToken(); */
-});
-
 $('#authorizeButton').submit(function () {
 	/* On Submit, we need to:
-		1) Get a User Access Token with the User's credentials.
-		2) Get the User's friends list and display it.
-		3) Asynchronously, analyze the User's recent feed and determine which friends they interact with.
-		4) Determine which friends are inactive somehow.
-		5) Update the displayed friends list to account for the analysis.
+		1) Get the User's friends list and display it.
+		2) Asynchronously, analyze the User's recent feed and determine which friends they interact with.
+		3) Determine which friends are inactive somehow.
+		4) Update the displayed friends list to account for the analysis.
 	*/
 
 	var username, password;
@@ -23,12 +18,6 @@ $('#authorizeButton').submit(function () {
 	GetAccessToken(username, password);
 });
 
-function getAccessToken(username, password) {
-	/* SUCESS: getFriends(msg.id, msg.accessToken) and getFeedData */
-
-	/* FAILURE: display authorization failure info. */
-};
-
 function getFriends(id, accessToken) {
 	/* GET request at me/friends endpoint. 
 
@@ -37,7 +26,9 @@ function getFriends(id, accessToken) {
 };
 
 function displayFriends(friends) {
-
+	for(var i = 0; i < friends.length; i++) {
+		console.log(friends[i].name + ' : ' + friends[i].id);
+	}
 };
 
 function getFeedData(id, accessToken) {

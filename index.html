@@ -58,9 +58,12 @@ Hello World <br />
   // This testAPI() function is only called in those cases. 
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
+
     FB.api('/me?fields=friends', function(response) {
-    console.log('Friends: ' + response.data);
+    console.log('Friends: ' + response.friends.data);
+    displayFriends(response.friends.data);
     });
+
     FB.api('/me/feed?fields=from,to,likes.fields(id),comments.fields(from.id),message_tags', function(response) {
       console.log('Ids : ' + response.data);
     });
