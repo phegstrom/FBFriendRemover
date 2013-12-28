@@ -60,7 +60,7 @@ Hello World <br />
     console.log('Welcome!  Fetching your information.... ');
 
     FB.api('/me?fields=friends', function(response) {
-    console.log('Friends: ' + response.friends.data);
+    console.log('Friends: ' + JSON.stringify(response.friends.data));
     displayFriends(response.friends.data);
     });
 
