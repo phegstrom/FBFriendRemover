@@ -81,7 +81,7 @@ function Friends() {
 	this.list = [];
 
 	this.add = function(friendId) {
-		var index = indexOf(friendId);
+		var index = this.indexOf(friendId);
 		if (index != null) {
 			this.list[index].occurrences += 1;
 		} else {
