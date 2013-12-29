@@ -68,7 +68,7 @@ function processFeedData(feed) {
 
 function updateDisplayedFriends(friends) {
 	var friendsHtml = '';
-	friends.sort(function(friend1, friend2) {return friend1.occurrences > friend2.occurrences});
+	friends.sort(function(friend1, friend2) {return friend1.occurrences > friend2.occurrences;});
 	for (var l = 0; l < friends.length; l++) {
 		friendsHtml += '<p>Id: ' + friends.list[l].id + '	# of occurrences:' + friends.list[l].occurrences + '</p>';
 	}
