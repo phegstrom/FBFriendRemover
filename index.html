@@ -63,6 +63,8 @@
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
 
+    friends = new Friends();
+
     FB.api('/me?fields=id,first_name,last_name', function(response) {
       USER_ID = response.id;
       FIRST_NAME = response.first_name;
@@ -70,7 +72,7 @@
     });
 
     FB.api('/me?fields=friends.fields(name,id,picture.type(square))', function(response) {
-      displayFriends(response.friends.data);
+      addFriends(response.friends.data);
     });
 
     FB.api('/me/feed?fields=from,to,likes.fields(id),comments.fields(from),message_tags,story_tags&limit=100', function(response) {

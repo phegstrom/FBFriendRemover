@@ -8,6 +8,8 @@ var USER_ID;
 var FIRST_NAME;
 var LAST_NAME;
 
+var friends;
+
 function getFriends(id, accessToken) {
 	/* GET request at me/friends endpoint. 
 
@@ -15,11 +17,27 @@ function getFriends(id, accessToken) {
 	*/
 };
 
-function displayFriends(friends) {
+function addFriends(friendList) {
+	var friend;
+
+	for(var i = 0; i < friendList.length; i++) {
+		friend = friendList[i];
+		friends.addFriend(new Friend(friend.id, friend.name, 0, friend.picture.data.url));
+	}
+
+	displayFriends();
+};
+
+function displayFriends() {
+	friends.list.sort(function(friend1, friend2) {return friend1.occurrences < friend2.occurrences;});
+
 	var friendHtml = '';
-	for(var i = 0; i < friends.length; i++) {
-		friendHtml += '<p>' + friends[i].name + ' : ' + friends[i].id 
-			+ ' <img src="' + friends[i].picture.data.url + '"></p>';
+	var friend;
+	
+	for(var i = 0; i < friends.list.length; i++) {
+		friend = friends.list[i];
+		friendHtml += '<p>' + friend.name + ' : ' + friend.id 
+			+ ' <img src="' + friend.picture + '">' + '	occurences: ' + friend.occurences + '</p>';
 	}
 
 	var friendDiv = document.getElementById('friendListDiv');
@@ -28,15 +46,13 @@ function displayFriends(friends) {
 
 /* Extracts the number of occurences of each friend id and populates friends array. */
 function processFeedData(feed) {
-	var friends = new Friends();
-
 	var post;
 
 	function addIdsFromArray(array) {
 		if (array != null && array.data != null) {
 			for (var k = 0; k < array.data.length; k++) {
 				if (array.data[k].id != USER_ID)
-					friends.add(array.data[k].id);
+					friends.addOccurrence(array.data[k].id);
 			}
 		}
 	};
@@ -45,7 +61,7 @@ function processFeedData(feed) {
 		post = feed[j];
 
 		if (post.from != null && post.from.id != USER_ID) {
-			friends.add(post.from.id);
+			friends.addOccurrence(post.from.id);
 		}
 
 		/* Handle data that are returned as arrays. */
@@ -58,34 +74,25 @@ function processFeedData(feed) {
 		if (post.comments != null) {
 			for (var k = 0; k < post.comments.data.length; k++) {
 				if (post.comments.data[k].from.id != USER_ID)
-					friends.add(post.comments.data[k].from.id);
+					friends.addOccurrence(post.comments.data[k].from.id);
 			}
 		}
 	}
 
-	return updateDisplayedFriends(friends);
-};
-
-function updateDisplayedFriends(friends) {
-	var friendsHtml = '';
-	friends.list.sort(function(friend1, friend2) {return friend1.occurrences > friend2.occurrences;});
-	for (var l = 0; l < friends.list.length; l++) {
-		friendsHtml += '<p>Id: ' + friends.list[l].id + '	# of occurrences:' + friends.list[l].occurrences + '</p>';
-	}
-
-	var friendDiv = document.getElementById('updatedFriendDiv');
-	friendDiv.innerHTML += friendsHtml;
+	return displayFriends();
 };
 
 function Friends() {
 	this.list = [];
 
-	this.add = function(friendId) {
+	this.addFriend = function(friend) {
+		this.list.push(friend);
+	};
+
+	this.addOccurrence = function(friendId) {
 		var index = this.indexOf(friendId);
 		if (index != null) {
 			this.list[index].occurrences += 1;
-		} else {
-			this.list.push(new Friend(friendId, 1));
 		}
 	};
 
@@ -112,7 +119,9 @@ function Friends() {
 	};
 };
 
-function Friend(id, occurrences) {
+function Friend(id, name, picture, occurrences) {
 	this.id = id;
+	this.name = name;
+	this.picture = picture;
 	this.occurrences = occurrences;
 };
