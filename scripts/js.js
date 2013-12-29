@@ -28,7 +28,7 @@ function displayFriends(friends) {
 
 /* Extracts the number of occurences of each friend id and populates friends array. */
 function processFeedData(feed) {
-	var userId = FB.getLoginSatus();
+	var userId = FB.getLoginSatus()
 	var friends = new Friends();
 
 	var post;
