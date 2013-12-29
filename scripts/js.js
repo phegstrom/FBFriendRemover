@@ -70,7 +70,7 @@ function processFeedData(feed) {
 function updateDisplayedFriends(friends) {
 	var friendsHtml = '';
 	friends.sort();
-	for (int l = 0; l < friends.length; l++) {
+	for (var l = 0; l < friends.length; l++) {
 		friendsHtml += '<p>Id: ' + friends[l].id + '	# of occurrences:' + friends[l].occurrences + '</p>';
 	}
 
