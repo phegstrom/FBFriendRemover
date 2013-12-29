@@ -80,7 +80,7 @@ function updateDisplayedFriends(friends) {
 function Friends() {
 	this.list = [];
 
-	add = function(friendId) {
+	this.add = function(friendId) {
 		var index = indexOf(friendId);
 		if (index != null) {
 			this.list[index].occurrences += 1;
@@ -89,19 +89,21 @@ function Friends() {
 		}
 	};
 
-	containsId = function(friendId) {
+	/*
+	this.containsId = function(friendId) {
     	return (this.list.indexOf(friendId) != null);
 	};
 
-	getFriendById = function(friendId) {
+	this.getFriendById = function(friendId) {
 	    for (var i = 0; i < this.length; i++) {
 	      if (this.list[i].id == friendId) 
 	      	return this.list[i];
 	    }
 		return null;
 	};
+	*/
 
-	indexOf = function(friendId) {
+	this.indexOf = function(friendId) {
 	    for (var i = 0; i < this.list.length; i++) {
 	      if (this.list[i].id == friendId) 
 	      	return i;
