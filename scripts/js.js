@@ -22,7 +22,7 @@ function addFriends(friendList) {
 
 	for(var i = 0; i < friendList.length; i++) {
 		friend = friendList[i];
-		friends.addFriend(new Friend(friend.id, friend.name, 0, friend.picture.data.url));
+		friends.addFriend(new Friend(friend.id, friend.name, friend.picture.data.url, 0));
 	}
 
 	displayFriends();
@@ -33,7 +33,7 @@ function displayFriends() {
 
 	var friendHtml = '';
 	var friend;
-	
+
 	for(var i = 0; i < friends.list.length; i++) {
 		friend = friends.list[i];
 		friendHtml += '<p>' + friend.name + ' : ' + friend.id 
@@ -41,7 +41,7 @@ function displayFriends() {
 	}
 
 	var friendDiv = document.getElementById('friendListDiv');
-	friendDiv.innerHTML += friendHtml;
+	friendDiv.innerHTML = friendHtml;
 };
 
 /* Extracts the number of occurences of each friend id and populates friends array. */
