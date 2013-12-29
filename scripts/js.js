@@ -33,7 +33,7 @@ function processFeedData(feed) {
 	var post;
 
 	function addIdsFromArray(array) {
-		if (array != null) {
+		if (array != null && array.data != null) {
 			for (var k = 0; k < array.data.length; k++) {
 				if (array.data[k].id != USER_ID)
 					friends.add(array.data[k].id);
