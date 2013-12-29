@@ -71,7 +71,7 @@ function updateDisplayedFriends(friends) {
 	var friendsHtml = '';
 	friends.sort();
 	for (var l = 0; l < friends.length; l++) {
-		friendsHtml += '<p>Id: ' + friends[l].id + '	# of occurrences:' + friends[l].occurrences + '</p>';
+		friendsHtml += '<p>Id: ' + friends.list[l].id + '	# of occurrences:' + friends.list[l].occurrences + '</p>';
 	}
 
 	var friendDiv = document.getElementById('updatedFriendDiv');
@@ -79,32 +79,32 @@ function updateDisplayedFriends(friends) {
 };
 
 function Friends() {
-	this = [];
+	this.list = [];
 
 	add = function(friendId) {
 		var index = indexOf(friendId);
 		if (index != null) {
-			this[index].occurrences += 1;
+			this.list[index].occurrences += 1;
 		} else {
-			this.push(new Friend(friendId, 1));
+			this.list.push(new Friend(friendId, 1));
 		}
 	};
 
 	containsId = function(friendId) {
-    	return (this.indexOf(friendId) != null);
+    	return (this.list.indexOf(friendId) != null);
 	};
 
 	getFriendById = function(friendId) {
 	    for (var i = 0; i < this.length; i++) {
-	      if (this[i].id == friendId) 
-	      	return this[i];
+	      if (this.list[i].id == friendId) 
+	      	return this.list[i];
 	    }
 		return null;
 	};
 
 	indexOf = function(friendId) {
-	    for (var i = 0; i < this.length; i++) {
-	      if (this[i].id == friendId) 
+	    for (var i = 0; i < this.list.length; i++) {
+	      if (this.list[i].id == friendId) 
 	      	return i;
 	    }
 		return null;
