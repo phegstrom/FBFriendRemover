@@ -65,19 +65,23 @@
 
     friends = new Friends();
 
-    FB.api('/me?fields=id,first_name,last_name', function(response) {
-      USER_ID = response.id;
-      FIRST_NAME = response.first_name;
-      LAST_NAME = response.last_name;
+    FB.api('/me?fields=id,first_name,last_name', function(response1) {
+      USER_ID = response1.id;
+      FIRST_NAME = response1.first_name;
+      LAST_NAME = response1.last_name;
+
+      FB.api('/me?fields=friends.fields(first_name,last_name,id,picture.type(square))', function(response2) {
+        addFriends(response2.friends.data);
+
+        FB.api('/me/feed?fields=from,to,likes.fields(id),comments.fields(from),message_tags,story_tags&limit=500', function(response3) {
+          processFeedData(response3.data);
+        });
+      });
     });
 
-    FB.api('/me?fields=friends.fields(name,id,picture.type(square))', function(response) {
-      addFriends(response.friends.data);
-    });
 
-    FB.api('/me/feed?fields=from,to,likes.fields(id),comments.fields(from),message_tags,story_tags&limit=100', function(response) {
-      processFeedData(response.data);
-    });
+
+
   }
 </script>
 

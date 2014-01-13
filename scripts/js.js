@@ -22,22 +22,22 @@ function addFriends(friendList) {
 
 	for(var i = 0; i < friendList.length; i++) {
 		friend = friendList[i];
-		friends.addFriend(new Friend(friend.id, friend.name, friend.picture.data.url, 0));
+		friends.addFriend(new Friend(friend.id, friend.first_name, friend.last_name, friend.picture.data.url, 0));
 	}
 
 	displayFriends();
 };
 
 function displayFriends() {
-	friends.list.sort(function(friend1, friend2) {return friend1.occurrences < friend2.occurrences;});
+	friends.sort();
 
 	var friendHtml = '';
 	var friend;
 
 	for(var i = 0; i < friends.list.length; i++) {
 		friend = friends.list[i];
-		friendHtml += '<p>' + friend.name + ' : ' + friend.id 
-			+ ' <img src="' + friend.picture + '">' + '	occurences: ' + friend.occurrences.toString() + '</p>';
+		friendHtml += '<p>' + friend.firstname + ' ' + friend.lastname + ' : ' + friend.id 
+			+ ' <img src="' + friend.picture + '">' + '	occurrences: ' + friend.occurrences.toString() + '</p>';
 	}
 
 	var friendDiv = document.getElementById('friendListDiv');
@@ -96,6 +96,26 @@ function Friends() {
 		}
 	};
 
+	/* Sorting friends should sort by first names, then last names, then number of occurrences. 
+		These are in increasing order of sort precedence. */
+	this.sort = function() {
+		this.list.sort( function(a, b) {
+			/* Occurrences has the highest sorting precedence, so return if they are different. */
+			if (a.occurrences < b.occurrences) return -1;
+			if (a.occurrences > b.occurrences) return 1;
+
+			/* Invariate: occurrences are the same. */
+			/* Now compare last names. */
+		    if (a.lastname < b.lastname) return -1;
+		    if (a.lastname > b.lastname) return 1;
+
+		    if (a.firstname < b.firstname) return -1;
+	    	if (a.firstname > b.firstname) return 1;
+
+	    	return 0;
+	    });
+	}
+
 	/*
 	this.containsId = function(friendId) {
     	return (this.list.indexOf(friendId) != null);
@@ -119,9 +139,10 @@ function Friends() {
 	};
 };
 
-function Friend(id, name, picture, occurrences) {
+function Friend(id, firstname, lastname, picture, occurrences) {
 	this.id = id;
-	this.name = name;
+	this.firstname = firstname;
+	this.lastname = lastname;
 	this.picture = picture;
 	this.occurrences = occurrences;
 };
