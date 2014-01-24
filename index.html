@@ -80,6 +80,13 @@
     });
 
 
+    // takes all albums -> photos in each -> likes,tags,comments for each
+
+    FB.api('me?fields=albums.fields(id,name,count,photos.limit(1).fields(id,likes.limit(100),tags,comments.limit(100).fields(id,from.fields(id),likes)))', function(response4) {
+
+      processPhotoData(response4.data);
+
+    });
 
 
   }

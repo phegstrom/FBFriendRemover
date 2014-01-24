@@ -44,6 +44,15 @@ function displayFriends() {
 	friendDiv.innerHTML = friendHtml;
 };
 
+
+/*Will extract number of occurences of each friend id in every photo the 
+person has uploaded*/
+
+function processPhotoData(albumList) {
+
+
+}
+
 /* Extracts the number of occurences of each friend id and populates friends array. */
 function processFeedData(feed) {
 	var post;
