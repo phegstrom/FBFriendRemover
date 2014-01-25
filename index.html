@@ -83,7 +83,7 @@
     // takes all albums -> photos,likes,comments in each -> likes,tags,comments for each
 
     FB.api('/me/permissions', function(responsePerm) {
-        var perms = responsePerm;
+        var permz = responsePerm;
         var x = 5;
       });
 
@@ -103,7 +103,7 @@
   Below we include the Login Button social plugin. This button uses the JavaScript SDK to
   present a graphical Login button that triggers the FB.login() function when clicked. -->
 
-<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+<fb:login-button scope="read_stream,user_photos,friends_photos" show-faces="true" width="200" max-rows="1"></fb:login-button>
 <<<<<<< HEAD
 <div id="friendListDiv"></div>
 <button type="button" onclick="FB.login()">Log in...bitch</button>

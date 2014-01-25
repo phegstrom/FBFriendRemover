@@ -55,21 +55,20 @@ function processPhotoData(albumList) {
 		currentAlbum = albumList[i];
 	}
 
-
 }
+
+function addIdsFromArray(array) {
+	if (array != null && array.data != null) {
+		for (var k = 0; k < array.data.length; k++) {
+			if (array.data[k].id != USER_ID)
+				friends.addOccurrence(array.data[k].id);
+		}
+	}
+};
 
 /* Extracts the number of occurences of each friend id and populates friends array. */
 function processFeedData(feed) {
 	var post;
-
-	function addIdsFromArray(array) {
-		if (array != null && array.data != null) {
-			for (var k = 0; k < array.data.length; k++) {
-				if (array.data[k].id != USER_ID)
-					friends.addOccurrence(array.data[k].id);
-			}
-		}
-	};
 
 	for(var j = 0; j < feed.length; j++) {
 		post = feed[j];
