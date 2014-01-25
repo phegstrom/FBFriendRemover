@@ -35,7 +35,7 @@
       // (2) it is a bad experience to be continually prompted to login upon page load.
       FB.login(function(response) {
       // handle the response
-      }, {scope: 'read_stream'});
+      }, {scope: 'read_stream,user_photos,friends_photos'});
     } else {
       // In this case, the person is not logged into Facebook, so we call the login() 
       // function to prompt them to do so. Note that at this stage there is no indication
@@ -44,7 +44,7 @@
       // The same caveats as above apply to the FB.login() call here.
       FB.login(function(response) {
       // handle the response
-      }, {scope: 'read_stream'});
+      }, {scope: 'read_stream,user_photos,friends_photos'});
     }
   });
   };
@@ -80,11 +80,18 @@
     });
 
 
-    // takes all albums -> photos in each -> likes,tags,comments for each
+    // takes all albums -> photos,likes,comments in each -> likes,tags,comments for each
 
-    FB.api('me?fields=albums.fields(id,name,count,photos.limit(1).fields(id,likes.limit(100),tags,comments.limit(100).fields(id,from.fields(id),likes)))', function(response4) {
+    FB.api('/me/permissions', function(responsePerm) {
+        var perms = responsePerm;
+        var x = 5;
+      });
 
-      processPhotoData(response4.data);
+
+    FB.api('/me?fields=albums.fields(id,name,count,comments.fields(from,likes,message_tags),likes,photos.limit(1).fields(id,likes.limit(100),tags,comments.limit(100).fields(from,message_tags)))', function(response4) {
+
+      var xx = response4;
+      processPhotoData(response4.albums.data);
 
     });
 

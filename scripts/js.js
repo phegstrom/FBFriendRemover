@@ -50,6 +50,11 @@ person has uploaded*/
 
 function processPhotoData(albumList) {
 
+	var currentAlbum;
+	for (var i = 0; i < albumList.length; i++) {
+		currentAlbum = albumList[i];
+	}
+
 
 }
 
