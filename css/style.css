@@ -1,0 +1,36 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#container-body {
+    background-color: #dfe3ee;  
+    height: 100%;
+}
+
+#container-central {
+    background-color: #3b5998;
+    height: 70%;
+    top: 15%;
+    padding: 2%;
+}
+
+#jumbotron {
+    background-color: #8b9dc3;
+    height: 100%;
+}
+
+.v-center {
+    display: table !important;
+}
+
+.v-center-element {
+    display: table-cell !important;
+    vertical-align: middle;
+}
+
+
