@@ -1,0 +1,42 @@
+@import "bootstrap";
+
+$FB_lightBlue: #dfe3ee;
+$FB_medBlue: #3b5998;
+$FB_darkBlue: #8b9dc3;
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#container-body {
+    background-color: $FB_lightBlue; 
+    height: 100%;
+}
+
+#container-central {
+    background-color: $FB_darkBlue;
+    height: 70%;
+    top: 15%;
+    padding: 2%;
+}
+
+#jumbotron {
+    background-color: $FB_medBlue;
+    height: 100%;
+}
+
+.v-center {
+    display: table !important;
+}
+
+.v-center-element {
+    display: table-cell !important;
+    vertical-align: middle;
+}
+
+
