@@ -10,13 +10,6 @@ var LAST_NAME;
 
 var friends;
 
-function getFriends(id, accessToken) {
-	/* GET request at me/friends endpoint. 
-
-		SUCCESS: displayFriends(msg);
-	*/
-};
-
 function addFriends(friendList) {
 	var friend;
 
@@ -36,8 +29,11 @@ function displayFriends() {
 
 	for(var i = 0; i < friends.list.length; i++) {
 		friend = friends.list[i];
-		friendHtml += '<p>' + friend.firstname + ' ' + friend.lastname + ' : ' + friend.id 
-			+ ' <img src="' + friend.picture + '">' + '	occurrences: ' + friend.occurrences.toString() + '</p>';
+		friendHtml += '<div class="well friend" id="' + friend.id + '">' 
+	 		+ ' <img class="img-circle" src="' + friend.picture + '">' + friend.firstname + ' ' + friend.lastname + ' : ' + friend.id 
+			 + '	occurrences: ' + friend.occurrences.toString() 
+			 + '<div class="well checkbox"></div>'
+			 + '</div>';
 	}
 
 	var friendDiv = document.getElementById('friendListDiv');
