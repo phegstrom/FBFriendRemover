@@ -1,0 +1,101 @@
+$FB_lightBlue: #dfe3ee;
+$FB_medBlue: #8b9dc3;
+$FB_darkBlue: #3b5998;
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+$headerHeight: 700px;
+
+%banner {
+    height: $headerHeight;
+    width: 100%;
+    position: fixed;
+    display: block;
+}
+
+.background-image {
+    @extend %banner;    
+    background-image: url('../images/Facebook-photo-grid-blurred.png');
+    background-repeat: repeat;
+}
+
+.filter {
+    @extend %banner;    
+    height: $headerHeight;
+    width: 100%;
+    background-color: $FB_darkBlue;
+    opacity: 0.8;
+    position: fixed;
+    display: block;
+}
+
+.banner-content {
+    @extend %banner;    
+    width: 100%;
+    height: $headerHeight;
+    position: fixed;
+    display: block; 
+
+    #text {
+        margin-top: 150px;
+        color: white;
+        text-align: center;
+        h1 {
+            font-size: 90pt;
+        }
+
+        h3 {
+        }
+
+        .divider {
+            height: 50px;
+        }
+
+        .btn {
+            height: 100px;
+            font-size: 25pt;
+        }
+    }
+}
+
+.horizontal-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#container-body {
+    background-color: $FB_lightBlue; 
+    height: 100%;
+}
+
+#container-central {
+    background-color: $FB_medBlue;
+    height: 80%;
+    top: 10%;
+    padding: 2%;
+}
+
+#jumbotron {
+    background-color: $FB_darkBlue;
+    height: 100%;
+    text-align: center;
+}
+
+#subtitle {
+        color: #414A52;
+    }
+.v-center {
+    display: table !important;
+}
+
+.v-center-element {
+    display: table-cell !important;
+    vertical-align: middle;
+}

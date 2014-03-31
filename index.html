@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=100%, height=device-height" initial-scale=1">
+<meta name="viewport" content="width=100%, height=device-height" initial-scale="1">
 <head>
   <script>
     window.fbAsyncInit = function() {
@@ -102,22 +102,41 @@
   <link rel=stylesheet type="text/css" href="bootstrap-3.1.1-dist/css/bootstrap.css">
 </head>
 <body>
+  <div class="background-image">
+  </div>
+  <div class="filter">
+  </div>
+  <div class="banner-content">
+    <div class="col-sm-8 col-sm-offset-2" id="text">
+      <h1>Too Many Friends</h1>
+      <div class="divider"></div>
+      <h2>Too Many Friends easily removes all unwanted Facebook friends and suggests friends to remove.</h2>
+      <div class="divider"></div>
+      
+      <button type="button" class="col-sm-4 col-sm-offset-4 btn btn-success" onclick="FB.login()">Give it a try</button>
+    </div>
+  </div>
+  <!--
   <div class="container-fluid" id="container-body">
     <div class="col-sm-10 col-sm-offset-1" id="container-central">
       <div class="jumbotron" id="jumbotron">
-        <h1>Too Many Friends</h1>
+        <div class="row">
+          <h1 id="title">Too Many Friends</h1>
+          <h3 class="span-10" id="subtitle">Too Many Friends easily removes all unwanted Facebook friends and suggests friends to remove.</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6"></div>
+        </div>
         <div id="fb-root"></div>
-        <!--
-        Below we include the Login Button social plugin. This button uses the JavaScript SDK to
-        present a graphical Login button that triggers the FB.login() function when clicked. -->
-        <fb:login-button scope="read_stream,user_photos,friends_photos" show-faces="true" width="200" max-rows="1"></fb:login-button>
+        <fb:login-button scope="read_stream,user_photos,friends_photos" show-faces="true" width="200" max-rows="1">Get Started</fb:login-button>
 
-        <!--<button type="button" onclick="FB.login()">Log in</button>-->
         <div id="friendListDiv"></div>
         <div id="updatedFriendDiv"></div>
       </div>
     </div>
   </div>
+-->
   <!-- Rest of javascript before end of body to not slow down content loading. -->
   <script src="scripts/js.js" type='text/javascript'></script>
 </body>
