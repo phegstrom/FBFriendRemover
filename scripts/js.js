@@ -8,7 +8,11 @@ var USER_ID;
 var FIRST_NAME;
 var LAST_NAME;
 
+var FRIENDS_DIV = 'friendListDiv';
+var FRIENDS_TO_DELETE_DIV = 'friendsToDeleteDiv';
+
 var friends;
+var friendsToDelete;
 
 function addFriends(friendList) {
 	var friend;
@@ -18,28 +22,43 @@ function addFriends(friendList) {
 		friends.addFriend(new Friend(friend.id, friend.first_name, friend.last_name, friend.picture.data.url, 0));
 	}
 
-	displayFriends();
+	displayFriends(friends, FRIENDS_DIV);
 };
 
-function displayFriends() {
+function displayFriends(friends, divName) {
 	friends.sort();
 
 	var friendHtml = '';
 	var friend;
 
 	for(var i = 0; i < friends.list.length; i++) {
-		friend = friends.list[i];
-		friendHtml += '<div class="well friend" id="' + friend.id + '">' 
-	 		+ ' <img class="img-circle" src="' + friend.picture + '">' + friend.firstname + ' ' + friend.lastname + ' : ' + friend.id 
-			 + '	occurrences: ' + friend.occurrences.toString() 
-			 + '<div class="well checkbox"></div>'
+		friend = friends.list[i]	;
+		friendHtml += '<div class="well friend" id="' + friend.id + '" '
+			+ 'onclick="removeFriend(' + friend.id + ', \'' + divName + '\');">' 
+	 		+ ' <img class="img-circle" src="' + friend.picture + '">' + friend.firstname + ' ' + friend.lastname
 			 + '</div>';
 	}
 
-	var friendDiv = document.getElementById('friendListDiv');
+	var friendDiv = document.getElementById(divName);
 	friendDiv.innerHTML = friendHtml;
 };
 
+function removeFriend(id, divName) {
+	var friend;
+
+	if (divName == FRIENDS_DIV) {
+		friend = friends.getFriendById(id);
+		friends.removeById(id);
+		friendsToDelete.addFriend(friend);
+	} else {
+		friend = friendsToDelete.getFriendById(id);
+		friendsToDelete.removeById(id);
+		friends.addFriend(friend);
+	}
+
+	displayFriends(friends, FRIENDS_DIV);
+	displayFriends(friendsToDelete, FRIENDS_TO_DELETE_DIV);
+}
 
 /*Will extract number of occurences of each friend id in every photo the 
 person has uploaded*/
@@ -88,14 +107,35 @@ function processFeedData(feed) {
 		}
 	}
 
-	return displayFriends();
+	return displayFriends(friends, FRIENDS_DIV);
 };
 
-function Friends() {
+function Friends(divName) {
 	this.list = [];
+	this.filteredList = [];
+	this.filterKey = '';
+
+	this.filter = function(key) { 
+		if (key == null) {
+			this.filteredList = this.list;
+		} else {
+			key = key.toLowerCase();
+			var keylen = key.length;
+			this.filteredList = list.filter(function (a) {
+				return a.firstName.substring(0, keylen).toLowerCase == key || 
+						a.firstName.substring(0, keylen).toLowerCase;
+			});
+		}
+	}
 
 	this.addFriend = function(friend) {
-		this.list.push(friend);
+		if (friend)
+			this.list.push(friend);
+	};
+
+	this.removeById = function(friendId) {
+		var index = this.indexOf(friendId);
+		this.list.splice(index, 1);
 	};
 
 	this.addOccurrence = function(friendId) {
@@ -110,8 +150,8 @@ function Friends() {
 	this.sort = function() {
 		this.list.sort( function(a, b) {
 			/* Occurrences has the highest sorting precedence, so return if they are different. */
-			if (a.occurrences < b.occurrences) return -1;
-			if (a.occurrences > b.occurrences) return 1;
+			//if (a.occurrences < b.occurrences) return -1;
+			//if (a.occurrences > b.occurrences) return 1;
 
 			/* Invariate: occurrences are the same. */
 			/* Now compare last names. */
@@ -125,19 +165,17 @@ function Friends() {
 	    });
 	}
 
-	/*
 	this.containsId = function(friendId) {
     	return (this.list.indexOf(friendId) != null);
 	};
 
 	this.getFriendById = function(friendId) {
-	    for (var i = 0; i < this.length; i++) {
+	    for (var i = 0; i < this.list.length; i++) {
 	      if (this.list[i].id == friendId) 
 	      	return this.list[i];
 	    }
 		return null;
 	};
-	*/
 
 	this.indexOf = function(friendId) {
 	    for (var i = 0; i < this.list.length; i++) {
