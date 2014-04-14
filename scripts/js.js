@@ -11,8 +11,8 @@ var LAST_NAME;
 var FRIENDS_DIV = 'friendListDiv';
 var FRIENDS_TO_DELETE_DIV = 'friendsToDeleteDiv';
 
-var friends;
-var friendsToDelete;
+var friends = new Friends(FRIENDS_DIV);
+var friendsToDelete = new Friends(FRIENDS_TO_DELETE_DIV);
 
 function addFriends(friendList) {
 	var friend;
@@ -22,20 +22,20 @@ function addFriends(friendList) {
 		friends.addFriend(new Friend(friend.id, friend.first_name, friend.last_name, friend.picture.data.url, 0));
 	}
 
-	displayFriends(friends, FRIENDS_DIV);
-};
-
-function displayFriends(friends, divName) {
 	friends.sort();
 
+	displayFriends(friends, FRIENDS_DIV);
+;}
+
+function displayFriends(friends, divName) {
 	var friendHtml = '';
 	var friend;
 
-	for(var i = 0; i < friends.list.length; i++) {
-		friend = friends.list[i]	;
+	for(var i = 0; i < friends.filteredList.length; i++) {
+		friend = friends.filteredList[i];
 		friendHtml += '<div class="well friend" id="' + friend.id + '" '
 			+ 'onclick="removeFriend(' + friend.id + ', \'' + divName + '\');">' 
-	 		+ ' <img class="img-circle" src="' + friend.picture + '">' + friend.firstname + ' ' + friend.lastname
+	 		+ ' <img class="img-circle" src="' + friend.picture + '">' + friend.firstName + ' ' + friend.lastName
 			 + '</div>';
 	}
 
@@ -112,20 +112,33 @@ function processFeedData(feed) {
 
 function Friends(divName) {
 	this.list = [];
-	this.filteredList = [];
+	this.filteredList = this.list;
 	this.filterKey = '';
+	this.divName = divName;
+	this.sortFunction = new Sort().lastName;
 
-	this.filter = function(key) { 
+	this.newFilter = function(key) {
+		this.filterKey = key;
+		this.filter();
+	};
+
+	this.filter = function() { 
+		var key = this.filterKey;
+
 		if (key == null) {
 			this.filteredList = this.list;
 		} else {
-			key = key.toLowerCase();
+			/* Remove whitespace and make key lowercase. */
+			key = key.toLowerCase().replace(/\s/g,'');
 			var keylen = key.length;
-			this.filteredList = list.filter(function (a) {
-				return a.firstName.substring(0, keylen).toLowerCase == key || 
-						a.firstName.substring(0, keylen).toLowerCase;
+			this.filteredList = this.list.filter(function (friend) {
+				return friend.firstName.substring(0, keylen).toLowerCase() == key ||
+						friend.lastName.substring(0, keylen).toLowerCase() == key ||
+						(friend.firstName + friend.lastName).substring(0, keylen).toLowerCase() == key;
 			});
 		}
+
+		displayFriends(this, this.divName);
 	}
 
 	this.addFriend = function(friend) {
@@ -145,25 +158,16 @@ function Friends(divName) {
 		}
 	};
 
-	/* Sorting friends should sort by first names, then last names, then number of occurrences. 
-		These are in increasing order of sort precedence. */
+	this.newSort = function(newSortFunction) {
+		this.sortFunction = newSortFunction;
+		this.sort();
+		displayFriends(this, this.divName);
+	};
+
 	this.sort = function() {
-		this.list.sort( function(a, b) {
-			/* Occurrences has the highest sorting precedence, so return if they are different. */
-			//if (a.occurrences < b.occurrences) return -1;
-			//if (a.occurrences > b.occurrences) return 1;
-
-			/* Invariate: occurrences are the same. */
-			/* Now compare last names. */
-		    if (a.lastname < b.lastname) return -1;
-		    if (a.lastname > b.lastname) return 1;
-
-		    if (a.firstname < b.firstname) return -1;
-	    	if (a.firstname > b.firstname) return 1;
-
-	    	return 0;
-	    });
-	}
+		this.list = this.list.sort(this.sortFunction);
+		this.filter();
+	};
 
 	this.containsId = function(friendId) {
     	return (this.list.indexOf(friendId) != null);
@@ -186,10 +190,36 @@ function Friends(divName) {
 	};
 };
 
-function Friend(id, firstname, lastname, picture, occurrences) {
+function Friend(id, firstName, lastName, picture, occurrences) {
 	this.id = id;
-	this.firstname = firstname;
-	this.lastname = lastname;
+	this.firstName = firstName;
+	this.lastName = lastName;
 	this.picture = picture;
 	this.occurrences = occurrences;
 };
+
+function Sort() {
+	this.firstName = function (a, b) {
+		    if (a.firstName < b.firstName) return -1;
+	    	if (a.firstName > b.firstName) return 1;
+
+		    if (a.lastName < b.lastName) return -1;
+		    if (a.lastName > b.lastName) return 1;
+
+	    	return 0;
+	};
+
+	this.lastName = function (a, b) {
+		    if (a.lastName < b.lastName) return -1;
+		    if (a.lastName > b.lastName) return 1;
+
+		    if (a.firstName < b.firstName) return -1;
+	    	if (a.firstName > b.firstName) return 1;
+
+	    	return 0;
+	};
+
+	this.occurrences = function (a, b) {
+		console.log("Occurrence sort not implemented");
+	};
+}

@@ -61,8 +61,10 @@
     function testAPI() {
       console.log('Welcome!  Fetching your information.... ');
 
+/*
       friends = new Friends();
       friendsToDelete = new Friends();
+      */
 
       FB.api('/me?fields=id,first_name,last_name', function(response1) {
         USER_ID = response1.id;
@@ -124,10 +126,10 @@
       <h2>Your Friends</h2>
       <div class="input-group search-bar">
         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-        <input type="text" class="form-control" id="searchFriends" onchange="friends.filter(this.value);" placeholder="Search"></input>
+        <input type="text" class="form-control" id="searchFriends" onchange="friends.newFilter(this.value);" placeholder="Search"></input>
         <div class="input-group-btn">
-          <button class="btn btn-default" type="button">First Name</button>
-          <button class="btn btn-default" type="button">Last Name</button>
+          <button class="btn btn-default" type="button" onclick="friends.newSort(new Sort().firstName);">First Name</button>
+          <button class="btn btn-default" type="button" onclick="friends.newSort(new Sort().lastName);">Last Name</button>
         </div>
       </div>
       <div id="friendListDiv"></div>
